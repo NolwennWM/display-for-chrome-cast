@@ -1,0 +1,21 @@
+{
+  "name": "display_chrome_cast",
+  "version": "0.1.0",
+  "description": "",
+  "main": "src/main.js",
+  "scripts": {
+    "start": "electron .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Nolwenn WEBER-MARQUISET",
+  "license": "MIT",
+  "type": "commonjs",
+  "devDependencies": {
+    "electron": "^38.4.0"
+  },
+  "dependencies": {
+    "chrome-launcher": "^1.2.1",
+    "express": "^5.1.0"
+  }
+}

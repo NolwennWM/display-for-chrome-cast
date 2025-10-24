@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salles AFCI</title>
+    <script src="./assets/js/script.js" type="module"></script>
+    <link rel="stylesheet" href="./assets/css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <ul id="salle-list">
+            <li class="logo">
+                <span class="date"></span>
+                <div class="clock">
+                    <span class="hour-hand"></span>
+                    <span class="minute-hand"></span>
+                    <span class="second-hand"></span>
+                    <span class="dot"></span>
+                </div>
+                <span class="time"></span>
+            </li>
+            <!-- La liste des salles sera insérée ici par le script.js -->
+        </ul>
+    </div>
+    <template>
+        <li class="salle-item">
+            <img src="./assets/images/afci_logo.png" alt="Logo AFCI">
+            <span class="salle-nom"></span>
+            <span class="salle-description"></span>
+        </li>
+    </template>
+</body>
+</html>

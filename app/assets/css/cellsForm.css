@@ -1,0 +1,4 @@
+body:has(#content.page-cellsForm) 
+{
+    background-color: lightgreen;
+}

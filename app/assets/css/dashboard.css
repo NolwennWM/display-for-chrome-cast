@@ -1,0 +1,4 @@
+body:has(#content.page-dashboard) 
+{
+    background-color: lightblue;
+}

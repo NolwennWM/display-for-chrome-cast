@@ -1,6 +1,7 @@
 const { shell } = require('electron');
 const chromeLauncher = require('chrome-launcher');
-const e = require('express');
+const path = require('path');
+const fs = require('fs').promises;
 
 
 async function openBrowser() 
@@ -19,4 +20,10 @@ async function openBrowser()
   }
 }
 
-module.exports = { openBrowser };
+async function routeTo(event, pathName)
+{
+  const filePath = path.join(__dirname, '..', "..", 'app', 'views', pathName + '.html');
+  return fs.readFile(filePath, 'utf-8');
+}
+
+module.exports = { openBrowser, routeTo };

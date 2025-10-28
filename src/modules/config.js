@@ -13,4 +13,19 @@ async function getConfig(configFile = "")
   }
 }
 
-module.exports = { getConfig };
+async function setConfig(configFile = "", key = "", value = "")
+{
+  const configPath = path.join(__dirname, "..", "..", 'config', configFile);
+  try {
+    const configData = await fs.readFile(configPath, 'utf-8');
+    const config = JSON.parse(configData);
+    config[key] = value;
+    await fs.writeFile(configPath, JSON.stringify(config, null, 2), 'utf-8');
+    return { success: true };
+  } catch (err) {
+    console.error('Impossible de mettre à jour le fichier de configuration :', configPath, err);
+    return { success: false };
+  }
+}
+
+module.exports = { getConfig, setConfig };

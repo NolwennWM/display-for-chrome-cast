@@ -1,0 +1,4 @@
+body:has(#content.page-configForm) 
+{
+    background-color: lightpink;
+}

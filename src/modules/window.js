@@ -22,7 +22,7 @@ async function createWindow()
 
     const win = new BrowserWindow(browserOptions);
 
-    win.loadFile('app/dashboard.html');
+    win.loadFile('app/layout.html');
 
     if (app.isPackaged) return;
     win.webContents.openDevTools();

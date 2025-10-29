@@ -7,7 +7,7 @@ body
 {
     height: 100dvh;
     background-color: var(--main-color);
-    overflow: hidden;
+    overflow-x: hidden;
     font-family:sans-serif; 
     padding:20px;
 }

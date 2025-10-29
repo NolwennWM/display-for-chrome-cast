@@ -6,7 +6,11 @@ contextBridge.exposeInMainWorld('appAPI',
   getConfig: getConfig,
   setConfig: setConfig,
   openBrowser: openBrowser,
-  routeTo: routeTo
+  routeTo: routeTo,
+  fetchCells: fetchCells,
+  fetchCell: fetchCell,
+  setCell: setCell,
+  deleteCell: deleteCell
 });
 
 async function getConfig(name) 
@@ -26,4 +30,21 @@ async function openBrowser()
 async function routeTo(path) 
 {  
   return await ipcRenderer.invoke('route-to', path);
+}
+
+async function fetchCells() 
+{
+    return await ipcRenderer.invoke('fetch-cells');
+}
+async function fetchCell(cellId)
+{
+    return await ipcRenderer.invoke('fetch-cell', cellId);
+}
+async function setCell(cellId, title, description)
+{
+    return await ipcRenderer.invoke('set-cell', cellId, title, description);
+}
+async function deleteCell(cellId)
+{
+    return await ipcRenderer.invoke('delete-cell', cellId);
 }

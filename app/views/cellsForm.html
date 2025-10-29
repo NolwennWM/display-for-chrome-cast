@@ -1,2 +1,27 @@
-cells form
+
+<button id="addCellButton">Ajouter</button>
+<table id="cellsTable">
+    <thead>
+        <tr>
+            <th>Titre</th>
+            <th>Description</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody id="cellsTableBody">
+        <!-- the rows will be added here dynamically -->
+    </tbody>
+</table>
 <button id="backBtn" data-page="dashboard">Retour</button>
+
+<dialog id="cellDialog" >
+    <form id="cellForm">
+        <label for="title">Titre:</label>
+        <input type="text" id="title" name="title" required>
+        <label for="description">Description:</label>
+        <input type="text" id="description" name="description" required>
+        <input type="hidden" id="cellId" name="cellId">
+        <button type="submit" id="saveBtn">Enregistrer</button>
+        <button type="button" id="cancelBtn">Annuler</button>
+    </form>
+</dialog>

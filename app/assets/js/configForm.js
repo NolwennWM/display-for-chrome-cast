@@ -32,6 +32,26 @@ export default class ConfigForm
             if (!input) continue;
 
             input.value = value;
+            input.addEventListener('change', this.saveConfig.bind(this));
+        }
+    }
+
+    async saveConfig(event)
+    {
+        if(!window.appAPI || !window.appAPI.setConfig) return;
+        const input = event.currentTarget;
+        
+
+        try {
+            if(!input.name) throw new Error("Le champ du formulaire n'a pas d'attribut 'name'");
+            if(input.value === undefined) throw new Error("Le champ du formulaire n'a pas de valeur définie");
+
+            const result = await window.appAPI.setConfig("styleConfig.json", input.name, input.value);
+
+            if(!result.success) throw new Error("Échec de la sauvegarde de la configuration");
+            console.log("Configuration sauvegardée :", { [input.name]: input.value });
+        } catch (error) {
+            console.error("Erreur lors de la sauvegarde de la configuration :", error);
         }
     }
 }

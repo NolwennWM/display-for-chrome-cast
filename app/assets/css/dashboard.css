@@ -1,4 +1,193 @@
 body:has(#content.page-dashboard) 
 {
     background-color: lightblue;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 40px);
+}
+
+/* Styles pour les boutons du dashboard */
+#content.page-dashboard button {
+    padding: 16px 32px;
+    border: none;
+    border-radius: 12px;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 280px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Bouton principal - Ouvrir dans le navigateur */
+#openBtn {
+    background: linear-gradient(135deg, var(--main-color, #2196F3), var(--main-color-dark, #1976D2));
+    color: white;
+    transform: scale(1);
+}
+
+#openBtn:hover {
+    background: linear-gradient(135deg, var(--main-color-dark, #1976D2), var(--main-color, #2196F3));
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(33, 150, 243, 0.3);
+}
+
+/* Bouton secondaire - Modifier les cellules */
+#editBtn {
+    background: linear-gradient(135deg, var(--success-color, #4CAF50), var(--success-color-dark, #388E3C));
+    color: white;
+}
+
+#editBtn:hover {
+    background: linear-gradient(135deg, var(--success-color-dark, #388E3C), var(--success-color, #4CAF50));
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(76, 175, 80, 0.3);
+}
+
+/* Bouton tertiaire - Modifier la configuration */
+#configBtn {
+    background: linear-gradient(135deg, var(--warning-color, #FF9800), var(--warning-color-dark, #F57C00));
+    color: white;
+}
+
+#configBtn:hover {
+    background: linear-gradient(135deg, var(--warning-color-dark, #F57C00), var(--warning-color, #FF9800));
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(255, 152, 0, 0.3);
+}
+
+/* Container pour organiser les boutons */
+#content.page-dashboard {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+/* Responsive Design */
+
+/* Tablettes (768px et moins) */
+@media screen and (max-width: 768px) {
+    body:has(#content.page-dashboard) {
+        padding: 15px;
+        gap: 18px;
+        justify-content: flex-start;
+        min-height: auto;
+        padding-top: 60px;
+    }
+
+    #content.page-dashboard {
+        gap: 20px;
+        padding: 15px;
+    }
+
+    #content.page-dashboard button {
+        min-width: 250px;
+        padding: 14px 28px;
+        font-size: 16px;
+    }
+}
+
+/* Smartphones (480px et moins) */
+@media screen and (max-width: 480px) {
+    body:has(#content.page-dashboard) {
+        padding: 10px;
+        gap: 15px;
+        padding-top: 40px;
+    }
+
+    #content.page-dashboard {
+        gap: 18px;
+        padding: 10px;
+    }
+
+    #content.page-dashboard button {
+        width: 100%;
+        min-width: auto;
+        padding: 16px 20px;
+        font-size: 16px;
+        border-radius: 10px;
+    }
+
+    /* Réduction de l'effet de scale sur mobile */
+    #content.page-dashboard button:hover {
+        transform: scale(1.02);
+    }
+}
+
+/* Très petits écrans (360px et moins) */
+@media screen and (max-width: 360px) {
+    body:has(#content.page-dashboard) {
+        padding: 8px;
+        padding-top: 30px;
+    }
+
+    #content.page-dashboard {
+        gap: 16px;
+        padding: 8px;
+    }
+
+    #content.page-dashboard button {
+        padding: 14px 16px;
+        font-size: 15px;
+        letter-spacing: 0.3px;
+    }
+}
+
+/* Mode paysage mobile */
+@media screen and (max-width: 768px) and (orientation: landscape) {
+    body:has(#content.page-dashboard) {
+        justify-content: center;
+        padding-top: 20px;
+        padding-bottom: 20px;
+    }
+
+    #content.page-dashboard {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 16px;
+        max-width: 100%;
+    }
+
+    #content.page-dashboard button {
+        flex: 1;
+        min-width: 200px;
+        max-width: 250px;
+    }
+}
+
+/* Animation d'entrée */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+#content.page-dashboard button {
+    animation: fadeInUp 0.6s ease forwards;
+}
+
+#content.page-dashboard button:nth-child(1) {
+    animation-delay: 0.1s;
+}
+
+#content.page-dashboard button:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+#content.page-dashboard button:nth-child(3) {
+    animation-delay: 0.3s;
 }

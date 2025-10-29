@@ -6,15 +6,15 @@ async function fetchCells()
 }
 
 export async function displayCells() {
-    const salles = await fetchCells();
+    const cells = await fetchCells();
     const template = document.querySelector('template');
     const liste = document.querySelector('#salle-list');
 
-    for (const [nom, description] of Object.entries(salles)) {
-        if(description === "") continue;
+    for (const [key, cell] of Object.entries(cells)) {
+        if(cell.description === "") continue;
         const clone = template.content.cloneNode(true);
-        clone.querySelector('.salle-nom').textContent = nom;
-        clone.querySelector('.salle-description').textContent = description;
+        clone.querySelector('.salle-nom').textContent = cell.title;
+        clone.querySelector('.salle-description').textContent = cell.description;
         liste.prepend(clone);
     }
 }

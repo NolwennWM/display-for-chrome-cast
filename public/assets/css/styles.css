@@ -4,6 +4,10 @@
     padding: 0;
     box-sizing: border-box;
 }
+:root
+{
+    font-size: var(--font-size);
+}
 body
 {
     height: 100dvh;

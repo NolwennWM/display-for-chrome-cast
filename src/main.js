@@ -20,10 +20,12 @@ async function openApp()
     
     // Vérifie si c'est le premier lancement et initialise les fichiers de config si nécessaire
     const firstLaunch = await isFirstLaunch();
-    if (firstLaunch) {
+    if (firstLaunch) 
+    {
       console.log('🚀 Premier lancement détecté, initialisation des fichiers de configuration...');
       await initializeConfigFiles();
-    } else {
+    } else 
+    {
       console.log('✅ Application déjà initialisée, pas de migration nécessaire');
     }
     
@@ -31,7 +33,8 @@ async function openApp()
     console.error('Erreur lors de l\'ouverture de l\'application:', error);
     
   }
-  finally {
+  finally 
+  {
     console.log('Application prête');
     createWindow(); 
     registerConfigIPC();

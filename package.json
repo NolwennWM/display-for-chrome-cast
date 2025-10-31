@@ -22,13 +22,17 @@
       "output": "release"
     },
     "win": {
-      "target": "nsis",
+      "target": [
+        { "target": "nsis", "arch": ["x64"] },
+        { "target": "portable", "arch": ["x64"] }
+      ],
       "icon": "app/assets/images/display_chrome_cast.png"
     },
     "nsis": {
       "oneClick": false,
-      "perMachine": true,
-      "allowToChangeInstallationDirectory": true
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "deleteAppDataOnUninstall": true
     }
   },
   "keywords": [],

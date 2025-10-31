@@ -1,3 +1,4 @@
+import {ModalNWM} from "./modal-nwm/modalnwm.js";
 
 export default class CellsForm
 {
@@ -5,9 +6,12 @@ export default class CellsForm
     dialog = document.querySelector('#cellDialog');
     form = document.querySelector('#cellForm');
     addButton = document.querySelector('#addCellButton');
+    modal = document.createElement("dialog", { is: 'modal-nwm' });
+
     constructor()
     {
         this.init();
+        
     }
 
     init()
@@ -18,6 +22,9 @@ export default class CellsForm
         this.addButton?.addEventListener('click', this.displayDialog.bind(this));
         this.form?.addEventListener('submit', this.handleFormSubmit.bind(this));
         this.dialog?.querySelector('#cancelBtn')?.addEventListener('click', this.hideDialog.bind(this));
+        document.body.append(this.modal);
+
+        console.log("Modal Réponse :", this.modal.prompt("Test d'alerte depuis CellsForm"));
     }
     async loadCells()
     {

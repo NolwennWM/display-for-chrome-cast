@@ -20,7 +20,7 @@ async function openBrowser()
   }
 }
 
-async function routeTo(event, pathName)
+async function routeTo(pathName)
 {
   const filePath = path.join(__dirname, '..', "..", 'app', 'views', pathName + '.html');
   return fs.readFile(filePath, 'utf-8');

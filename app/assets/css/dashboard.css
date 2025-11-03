@@ -38,12 +38,12 @@ body:has(#content.page-dashboard)
 }
 
 /* Bouton secondaire - Modifier les cellules */
-#editBtn {
+#cellsEditBtn, #mainCellEditBtn {
     background: linear-gradient(135deg, var(--success-color, #4CAF50), var(--success-color-dark, #388E3C));
     color: white;
 }
 
-#editBtn:hover {
+#cellsEditBtn:hover, #mainCellEditBtn:hover {
     background: linear-gradient(135deg, var(--success-color-dark, #388E3C), var(--success-color, #4CAF50));
     transform: scale(1.05);
     box-shadow: 0 6px 20px rgba(76, 175, 80, 0.3);

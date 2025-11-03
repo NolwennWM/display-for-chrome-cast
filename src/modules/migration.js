@@ -21,7 +21,8 @@ async function initializeConfigFiles() {
         const configFiles = [
             'cellsConfig.json',
             'mainConfig.json',
-            'styleConfig.json'
+            'styleConfig.json',
+            "mainCellConfig.json"
         ];
         
         for (const configFile of configFiles) {

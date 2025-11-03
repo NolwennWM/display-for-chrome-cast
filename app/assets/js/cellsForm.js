@@ -23,8 +23,6 @@ export default class CellsForm
         this.form?.addEventListener('submit', this.handleFormSubmit.bind(this));
         this.dialog?.querySelector('#cancelBtn')?.addEventListener('click', this.hideDialog.bind(this));
         document.body.append(this.modal);
-
-        console.log("Modal Réponse :", this.modal.prompt("Test d'alerte depuis CellsForm"));
     }
     async loadCells()
     {
@@ -55,8 +53,10 @@ export default class CellsForm
     }
     async deleteCell(event)
     {
-        if(!confirm("Êtes-vous sûr de vouloir supprimer cette cellule ?")) return;
         const button = event.currentTarget;
+        if(!await this.modal.confirm("Êtes-vous sûr de vouloir supprimer cette cellule ?")) return;
+        console.log(event);
+        
         const cellId = button.getAttribute('data-id');
         console.log("Supprimer la cellule avec ID :", cellId);
         // Appeler l'API pour supprimer la cellule

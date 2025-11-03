@@ -1,20 +1,18 @@
-import { displayCells } from './handleCells.js';
-import { displayDate, updateTime } from './handleDate.js';
+import { CellsHandler } from './cellsHandler.js';
+import { MainCellHandler } from './mainCellHandler.js';
 
-startDisplay();
-
-function startDisplay()
+class Main
 {
-    const time = new Date();
-    const hours = time.getHours();
-    // if(hours >= 8 && hours <= 9 || hours >= 12 && hours <= 14)
+    constructor()
     {
-        displayCells();
+        console.log("Main class initialized");
+        this.init();
     }
-    displayDate();
-    updateTime();
-    setInterval(updateTime, 6000);
+    init()
+    {
+        new CellsHandler();
+        new MainCellHandler();
+    }
 }
 
-
-
+new Main();

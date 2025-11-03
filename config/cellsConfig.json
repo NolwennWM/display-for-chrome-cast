@@ -1,38 +1,22 @@
 {
   "cell_4": {
-    "title": "Salle 4123",
-    "description": "Assistant de Vie aux familllllllll"
+    "title": "Salle 7",
+    "description": "Pédagogique AIS"
   },
   "cell_5": {
-    "title": "Salle 5",
-    "description": "a"
+    "title": "Salle 6",
+    "description": "Plateau technique Administrateur d’Infrastructures Sécurisées"
   },
   "cell_6": {
-    "title": "Salle 6",
-    "description": "Administrateur d’Infrastructures Sécurisées bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla"
+    "title": "Salle",
+    "description": "Restauration"
   },
   "cell_7": {
-    "title": "Salle 7",
-    "description": "Atelier AIS"
+    "title": "Salle 4",
+    "description": "Assistant(e) de vie aux familles"
   },
   "cell_8": {
-    "title": "Salle 8",
-    "description": "Développeur Web et Web Mobile"
-  },
-  "cell_1761742667472": {
-    "title": "Salle 54",
-    "description": "Teeest edition"
-  },
-  "cell_1761743278678": {
-    "title": "Salle 467788",
-    "description": "Assistant de Vie aux Familles"
-  },
-  "cell_1761743313334": {
-    "title": "Salle 48",
-    "description": "Assistant de Vie aux Familles"
-  },
-  "cell_1761743512666": {
-    "title": "Salle 43",
-    "description": "Assistant de Vie aux Familles"
+    "title": "Appartement",
+    "description": "pédagogique"
   }
 }

@@ -1,0 +1,23 @@
+<form id="mainCellForm">
+    <div class="form-group">
+        <label for="dateFormat">Format de la date :</label>
+        <select id="dateFormat" name="date_format">
+            <option value="full">Complète (ex : lundi 1 janvier 2024)</option>
+            <option value="short">Courte (ex : 01/01/2024)</option>
+            <option value="none">Ne pas Afficher</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="timeFormat">Format de l'heure :</label>
+        <select id="timeFormat" name="time_format">
+            <option value="digital">Horloge Numérique (ex : 14:30)</option>
+            <option value="analog">Horloge Analogique</option>
+            <option value="none">Ne pas Afficher</option>
+        </select>
+    </div>
+    <div class="form-group checkbox-group">
+        <input type="checkbox" id="logoEnabled" name="logo_enabled">
+        <label for="logoEnabled">Afficher le logo</label>
+    </div>
+</form>
+<button id="backBtn" data-page="dashboard">Retour</button>

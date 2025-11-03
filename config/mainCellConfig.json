@@ -1,0 +1,6 @@
+{
+    "date_format": "full",
+    "time_format": "clock",
+    "logo_enabled": true,
+    "logo_path": "assets/images/afci_logo.png"
+}

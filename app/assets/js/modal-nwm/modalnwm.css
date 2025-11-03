@@ -10,8 +10,267 @@
     z-index: 10;
     justify-content: center;
     align-items: center;
+    backdrop-filter: blur(4px);
 }
+
 :host([hidden]) 
 {
     display: none;
+}
+
+/* Container principal de la modale */
+.modal-container 
+{
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    min-width: 320px;
+    max-width: 500px;
+    width: 90%;
+    padding: 0;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+/* Texte principal de la modale */
+.modal-text 
+{
+    width: 100%;
+    padding: 24px 24px 16px;
+    margin: 0;
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--text-dark, #333);
+    text-align: center;
+    font-weight: 500;
+}
+
+/* Champ de saisie pour les prompts */
+.modal-input 
+{
+    width: calc(100% - 48px);
+    margin: 0 24px 16px;
+    padding: 12px 16px;
+    border: 2px solid #e9ecef;
+    border-radius: 8px;
+    font-size: 16px;
+    font-family: inherit;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    outline: none;
+    background: #fafafa;
+}
+
+.modal-input:focus 
+{
+    border-color: var(--main-color, #007bff);
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+    background: white;
+}
+
+.modal-input::placeholder 
+{
+    color: #6c757d;
+    opacity: 0.8;
+}
+
+/* Zone des boutons */
+.modal-container::after 
+{
+    content: '';
+    display: block;
+    height: 1px;
+    background: #e9ecef;
+    margin: 8px 24px 0;
+}
+
+/* Bouton de validation */
+.modal-valide-button 
+{
+    background: var(--main-color, #007bff);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    margin: 16px 8px 24px 24px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 100px;
+    position: relative;
+    overflow: hidden;
+}
+
+.modal-valide-button:hover 
+{
+    background: var(--main-color-dark, #0056b3);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+}
+
+.modal-valide-button:active 
+{
+    transform: translateY(0);
+    box-shadow: 0 2px 6px rgba(0, 123, 255, 0.3);
+}
+
+/* Bouton de fermeture/annulation */
+.modal-close-button 
+{
+    background: #6c757d;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    margin: 16px 24px 24px 8px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 100px;
+    position: relative;
+    overflow: hidden;
+}
+
+.modal-close-button:hover 
+{
+    background: #5a6268;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(108, 117, 125, 0.3);
+}
+
+.modal-close-button:active 
+{
+    transform: translateY(0);
+    box-shadow: 0 2px 6px rgba(108, 117, 125, 0.3);
+}
+
+/* Effet ripple pour les boutons */
+.modal-valide-button::before,
+.modal-close-button::before 
+{
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.modal-valide-button:active::before,
+.modal-close-button:active::before 
+{
+    width: 300px;
+    height: 300px;
+}
+
+
+/* States spécifiques selon le type de modale */
+:host([data-type="alert"]) .modal-container 
+{
+    border-left: 4px solid #ffc107;
+}
+
+:host([data-type="confirm"]) .modal-container 
+{
+    border-left: 4px solid #007bff;
+}
+
+:host([data-type="prompt"]) .modal-container 
+{
+    border-left: 4px solid #28a745;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) 
+{
+    .modal-container 
+    {
+        min-width: 280px;
+        width: 95%;
+        margin: 20px;
+    }
+
+    .modal-text 
+    {
+        padding: 20px 20px 12px;
+        font-size: 15px;
+    }
+
+    .modal-input 
+    {
+        width: calc(100% - 40px);
+        margin: 0 20px 12px;
+        padding: 10px 14px;
+        font-size: 15px;
+    }
+
+    .modal-valide-button,
+    .modal-close-button 
+    {
+        padding: 10px 16px;
+        margin: 12px 6px 20px;
+        font-size: 15px;
+        min-width: 80px;
+    }
+}
+
+@media screen and (max-width: 480px) 
+{
+    .modal-container 
+    {
+        width: calc(100% - 20px);
+        margin: 10px;
+    }
+
+    .modal-text 
+    {
+        padding: 16px 16px 10px;
+        font-size: 14px;
+    }
+
+    .modal-input 
+    {
+        width: calc(100% - 32px);
+        margin: 0 16px 10px;
+        padding: 12px;
+        font-size: 16px; /* Évite le zoom sur iOS */
+    }
+
+    .modal-valide-button,
+    .modal-close-button 
+    {
+        padding: 12px 16px;
+        margin: 10px 4px 16px;
+        font-size: 16px;
+        width: calc(50% - 8px);
+    }
+
+    /* Stack les boutons verticalement sur très petits écrans */
+    @media screen and (max-width: 360px) 
+    {
+        .modal-valide-button,
+        .modal-close-button 
+        {
+            display: block;
+            width: calc(100% - 32px);
+            margin: 8px 16px;
+        }
+    }
+}
+
+/* Focus visible pour l'accessibilité */
+.modal-valide-button:focus-visible,
+.modal-close-button:focus-visible,
+.modal-input:focus-visible 
+{
+    outline: 2px solid var(--main-color, #007bff);
+    outline-offset: 2px;
 }

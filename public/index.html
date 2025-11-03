@@ -9,25 +9,16 @@
 </head>
 <body>
     <div class="container">
-        <ul id="salle-list">
-            <li class="logo">
-                <span class="date"></span>
-                <div class="clock">
-                    <span class="hour-hand"></span>
-                    <span class="minute-hand"></span>
-                    <span class="second-hand"></span>
-                    <span class="dot"></span>
-                </div>
-                <span class="time"></span>
-            </li>
-            <!-- La liste des salles sera insérée ici par le script.js -->
+        <ul id="cell-list">
+            <li class="mainCell"></li>
+            <!-- La liste des cellules sera insérée ici par le script.js -->
         </ul>
     </div>
     <template>
-        <li class="salle-item">
-            <img src="./assets/images/afci_logo.png" alt="Logo AFCI">
-            <span class="salle-nom"></span>
-            <span class="salle-description"></span>
+        <li class="cell-item">
+            <!-- <img src="./assets/images/afci_logo.png" alt="Logo AFCI"> -->
+            <span class="cell-nom"></span>
+            <span class="cell-description"></span>
         </li>
     </template>
 </body>

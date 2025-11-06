@@ -26,7 +26,7 @@ async function fetchCell(cellId)
     return cells[cellId] || null;
 }
 
-async function setCell(cellId, title, description) 
+async function setCell(cellId, cell) 
 {
     try {
         const cells = await fetchCells();
@@ -35,11 +35,11 @@ async function setCell(cellId, title, description)
         console.log("Is valid cell ID:", isValidCellId(cellId));
         cellId = isValidCellId(cellId) ? cellId : generateCellId();
         console.log("Using cell ID After:", cellId);
-        if (!isValidCellData(title, description)) 
+        if (!isValidCellData(cell)) 
         {
             throw new Error("Invalid cell data");
         }
-        cells[cellId] = { title, description };
+        cells[cellId] = cell;
         return await saveCells(cells);
     } catch (error) {
         console.error("Error writing cells config:", error);
@@ -92,10 +92,12 @@ function isValidCellId(cellId)
 {
     return /^cell_\d+$/.test(cellId);
 }
-function isValidCellData(title, description)
+function isValidCellData(cell)
 {
-    return typeof title === 'string' && title.trim() !== '' &&
-           typeof description === 'string';
+    return typeof cell.title === 'string' && 
+                    cell.title.trim() !== '' &&
+            typeof cell.description === 'string' && 
+            typeof cell.display === 'boolean';
 }
 
 module.exports = { fetchCells, fetchCell, setCell, deleteCell };

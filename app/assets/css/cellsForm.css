@@ -139,6 +139,44 @@ body:has(#content.page-cellsForm)
 #cancelBtn:hover {
     background-color: var(--secondary-hover, #5a6268);
 }
+.actions-cell
+{
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    justify-content: center;
+}
+.table-btn
+{
+    background: none;
+    border: none;
+    cursor: pointer;
+    position: relative;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.display-btn
+{
+
+    & img
+    {
+        position: absolute;
+        transition: opacity 0.3s ease;
+        opacity: 0;
+    }
+    &:not(.displayed) .toDisplay
+    {
+        opacity: 1;
+    }
+    &.displayed .toHide
+    {
+        opacity: 1;
+    }
+}
 
 /* Responsive Design */
 

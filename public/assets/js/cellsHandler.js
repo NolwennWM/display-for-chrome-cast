@@ -21,11 +21,15 @@ export class CellsHandler
     
         for (const [key, cell] of Object.entries(cells)) 
         {
-            if(cell.description === "") continue;
+            if(!cell.display) continue;
 
             const clone = template.content.cloneNode(true);
+            
             clone.querySelector('.cell-nom').textContent = cell.title;
-            clone.querySelector('.cell-description').textContent = cell.description;
+
+            const description = clone.querySelector('.cell-description');
+            if(cell.description !== "") description.textContent = cell.description;
+            else description.remove();
             
             liste.prepend(clone);
         }

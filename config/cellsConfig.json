@@ -1,22 +1,27 @@
 {
   "cell_4": {
     "title": "Salle 7",
-    "description": "Pédagogique AIS"
+    "description": "Pédagogique AIS",
+    "display": true
   },
   "cell_5": {
     "title": "Salle 6",
-    "description": "Plateau technique Administrateur d’Infrastructures Sécurisées"
+    "description": "Plateau technique Administrateur d’Infrastructures Sécurisées",
+    "display": true
   },
   "cell_6": {
     "title": "Salle",
-    "description": "Restauration"
+    "description": "Restauration",
+    "display": true
   },
   "cell_7": {
     "title": "Salle 4",
-    "description": "Assistant(e) de vie aux familles"
+    "description": "Assistant(e) de vie aux familles",
+    "display": true
   },
   "cell_8": {
     "title": "Appartement",
-    "description": "pédagogique"
+    "description": "pédagogique",
+    "display": true
   }
 }

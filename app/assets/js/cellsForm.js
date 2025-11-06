@@ -109,6 +109,7 @@ export default class CellsForm
         this.tableBody.innerHTML = '';
         this.loadCells();
         this.dialog.close();
+        this.form.cellId.value = '';
 
     }
     async saveCell(cellId, cell)

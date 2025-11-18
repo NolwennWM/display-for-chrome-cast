@@ -10,7 +10,8 @@ contextBridge.exposeInMainWorld('appAPI',
   fetchCells: fetchCells,
   fetchCell: fetchCell,
   setCell: setCell,
-  deleteCell: deleteCell
+  deleteCell: deleteCell,
+  exchangeOrders: exchangeOrders
 });
 
 async function getConfig(name) 
@@ -47,4 +48,8 @@ async function setCell(cellId, title, description)
 async function deleteCell(cellId)
 {
     return await ipcRenderer.invoke('delete-cell', cellId);
+}
+async function exchangeOrders(cellId1, cellId2)
+{
+    return await ipcRenderer.invoke('exchange-orders', cellId1, cellId2);
 }

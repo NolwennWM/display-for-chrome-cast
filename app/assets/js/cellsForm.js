@@ -1,4 +1,4 @@
-import {ModalNWM} from "./modal-nwm/modalnwm.js";
+import {ModalNWM} from './modal-nwm/modalnwm.js';
 
 export default class CellsForm
 {
@@ -22,17 +22,24 @@ export default class CellsForm
         this.addButton?.addEventListener('click', this.displayDialog.bind(this));
         this.form?.addEventListener('submit', this.handleFormSubmit.bind(this));
         this.dialog?.querySelector('#cancelBtn')?.addEventListener('click', this.hideDialog.bind(this));
+        this.tableBody?.addEventListener('click', this.handleEvents.bind(this));
         document.body.append(this.modal);
     }
     async loadCells()
     {
         const cells = await window.appAPI.fetchCells();        
         console.log("Cells chargées :", cells);
-        this.populateForm(cells);
+        const sortedCells = Object.entries(cells).sort(this.sortCells);
+        console.log("Cells triées :", sortedCells);
+        this.populateForm(sortedCells);
+    }
+    sortCells(a, b)
+    {
+        return a[1].order - b[1].order;
     }
     populateForm(cells)
     {
-        for (const [id, cell] of Object.entries(cells)) 
+        for (const [id, cell] of cells) 
         {
             console.log("Cell :", cell);
             const row = document.createElement('tr');
@@ -40,32 +47,53 @@ export default class CellsForm
                 <td>${cell.title}</td>
                 <td>${cell.description}</td>
                 <td class="actions-cell">
-                    <button class="edit-btn table-btn" data-id="${id}">
+                    <button class="edit-btn table-btn" data-id="${id}" data-role="edit">
                         <img src="assets/images/edit_icon.svg" alt="icon crayon" width="16" height="16">
                     </button>
-                    <button class="delete-btn table-btn" data-id="${id}">
+                    <button class="delete-btn table-btn" data-id="${id}" data-role="delete">
                         <img src="assets/images/delete_icon.svg" alt="icon poubelle" width="16" height="16">
                     </button>
-                    <button class="display-btn table-btn ${cell.display ? 'displayed' : ''}" data-id="${id}">
+                    <button class="display-btn table-btn ${cell.display ? 'displayed' : ''}" data-id="${id}" data-role="display">
                         <img src="assets/images/eye_open.svg" alt="icon oeil ouvert" width="16" height="16" class="toDisplay">
                         <img src="assets/images/eye_close.svg" alt="icon oeil barré" width="16" height="16" class="toHide">
                     </button>
+                    <span class="order-handles">
+                        <button class="move-up-btn table-btn" data-id="${id}" title="Monter" data-role="move-up">↑</button>
+                        <button class="move-down-btn table-btn" data-id="${id}" title="Descendre" data-role="move-down">↓</button>
+                    </span>
                 </td>
             `;
+            row.dataset.cellId = id;
             this.tableBody.append(row);
-            const editButton = row.querySelector('.edit-btn');
-            editButton?.addEventListener('click', this.editCell.bind(this));
-            const deleteButton = row.querySelector('.delete-btn');
-            deleteButton?.addEventListener('click', this.deleteCell.bind(this));
-            const displayButton = row.querySelector('.display-btn');
-            displayButton?.addEventListener('click', this.toggleDisplayCell.bind(this));
         }
     }
-    async deleteCell(event)
+    handleEvents(event)
     {
-        const button = event.currentTarget;
+        const button = event.target.closest('.table-btn');
+        if (!button) return; // Pas un bouton, ignorer
+        const role = button.getAttribute('data-role');
+        switch (role) 
+        {
+            case 'edit':
+                this.editCell(button);
+                break;
+            case 'delete':
+                this.deleteCell(button);
+                break;
+            case 'display':
+                this.toggleDisplayCell(button);
+                break;
+            case 'move-up':
+            case 'move-down':
+                this.moveCell(button);
+                break;
+            default:
+                console.warn("Rôle de bouton inconnu :", role);
+        }
+    }
+    async deleteCell(button)
+    {
         if(!await this.modal.confirm("Êtes-vous sûr de vouloir supprimer cette cellule ?")) return;
-        console.log(event);
         
         const cellId = button.getAttribute('data-id');
         console.log("Supprimer la cellule avec ID :", cellId);
@@ -85,9 +113,8 @@ export default class CellsForm
             console.error("Erreur lors de la suppression de la cellule :", error);
         }
     }
-    async editCell(event)
+    async editCell(button)
     {
-        const button = event.currentTarget;
         const cellId = button.getAttribute('data-id');
         console.log("Éditer la cellule avec ID :", cellId);
         // Logique pour éditer la cellule (afficher un formulaire, etc.)
@@ -149,9 +176,8 @@ export default class CellsForm
     {
         this.dialog.close();
     }
-    async toggleDisplayCell(event)
+    async toggleDisplayCell(button)
     {
-        const button = event.currentTarget;
         const cellId = button.getAttribute('data-id');
         console.log("Basculer l'affichage de la cellule avec ID :", cellId);
         if(!window.appAPI || !window.appAPI.fetchCell || !window.appAPI.setCell) return;
@@ -166,5 +192,35 @@ export default class CellsForm
         } catch (error) {
             console.error("Erreur lors de la mise à jour de l'affichage de la cellule :", error);
         }
+    }
+
+    async moveCell(button)
+    {
+        if(!window.appAPI || !window.appAPI.exchangeOrders) return;
+        const cellId = button.getAttribute('data-id');
+        const direction = button.classList.contains('move-up-btn') ? 'up' : 'down';
+        console.log(`Déplacer la cellule avec ID : ${cellId} vers le ${direction}`);
+
+        // Logique pour déplacer la cellule (mettre à jour l'ordre, recharger la liste, etc.)
+        const currentCell = button.closest('tr');
+        let siblingCell;
+        switch(button.dataset.role)
+        {
+            case 'move-up':
+                siblingCell = currentCell.previousElementSibling;
+                siblingCell?.before(currentCell);
+                break;
+            case 'move-down':
+                siblingCell = currentCell.nextElementSibling;
+                siblingCell?.after(currentCell);
+                break;
+            default:
+                return;
+        }
+        if(!siblingCell) return; // Pas de cellule sœur, ne rien faire
+        
+        const siblingId = siblingCell.dataset.cellId;
+        await window.appAPI.exchangeOrders(cellId, siblingId);
+        console.log("Ordres des cellules échangés :", cellId, siblingId);
     }
 }

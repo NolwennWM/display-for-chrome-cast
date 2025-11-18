@@ -1,5 +1,5 @@
 const { ipcMain } = require('electron');
-const { fetchCells, fetchCell, setCell, deleteCell } = require('../modules/cells');
+const { fetchCells, fetchCell, setCell, deleteCell, exchangeOrders } = require('../modules/cells');
 
 function registerCellsIPC()
 {
@@ -14,6 +14,9 @@ function registerCellsIPC()
     }); 
     ipcMain.handle('delete-cell', async (event, cellId) => {
         return await deleteCell(cellId);
+    });
+    ipcMain.handle('exchange-orders', async (event, cellId1, cellId2) => {
+        return await exchangeOrders(cellId1, cellId2);
     });
 };
 

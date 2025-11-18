@@ -18,8 +18,10 @@ export class CellsHandler
         const cells = await this.#fetchCells();
         const template = document.querySelector('template');
         const liste = document.querySelector('#cell-list');
+
+        const sortedCells = Object.entries(cells).sort(this.sortCells);
     
-        for (const [key, cell] of Object.entries(cells)) 
+        for (const [key, cell] of sortedCells) 
         {
             if(!cell.display) continue;
 
@@ -31,7 +33,12 @@ export class CellsHandler
             if(cell.description !== "") description.textContent = cell.description;
             else description.remove();
             
-            liste.prepend(clone);
+            liste.append(clone);
         }
+    }
+
+    sortCells(a, b)
+    {
+        return a[1].order - b[1].order;
     }
 }

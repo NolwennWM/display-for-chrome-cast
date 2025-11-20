@@ -52,15 +52,26 @@ body
             font-family: "Comic Sans MS", cursive, sans-serif;
             animation: shadow-pulse 10s infinite alternate;
             position: relative;
+            &:has(img)
+            {
+                padding: 0;
+                & .cell-name
+                {
+                    position: absolute;
+                    bottom: 0;
+                    right: 0;
+                    background-color: rgba(255, 255, 255, 0.7);
+                    padding: 4px;
+                    border-radius: 5px;
+                }
+
+            } 
+
             & img
             {
-                position: absolute;
-                top: 5px;
-                right: 5px;
-                border-radius: 50%;
-                max-width: 10%;
-                aspect-ratio: 1/1;
-                margin-bottom: 10px;
+                width: 100%;
+                height: 100%;
+                object-fit: contain;
             }
 
         }

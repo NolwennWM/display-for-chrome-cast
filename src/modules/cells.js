@@ -1,7 +1,7 @@
 const fs = require('fs').promises;
 const path = require('path');
 const { app } = require('electron');
-const { get } = require('http');
+const { deleteImage } = require('./images');
 
 async function fetchCells() 
 {
@@ -49,7 +49,8 @@ async function setCell(cellId, cell)
             throw new Error("Invalid cell data");
         }
 
-        
+        const oldCell = cells[cellId];
+        await isImageCell(oldCell, true);
         cells[cellId] = cell;
         return await saveCells(cells);
     } catch (error) {
@@ -60,9 +61,10 @@ async function setCell(cellId, cell)
 
 async function deleteCell(cellId)
 {
-    const cellsPath = getCellPath();
     try {
         const cells = await fetchCells();
+        const oldCell = cells[cellId];
+        await isImageCell(oldCell, true);
         delete cells[cellId];
         return await saveCells(cells);
     } catch (error) {
@@ -112,7 +114,20 @@ function isValidCellData(cell)
             typeof cell.order === 'number' &&
             cell.order >= 0;
 }
-
+async function isImageCell(cell, toDelete = true)
+{
+    const imageCellRegex = /^\[image='(.+)'\]$/;
+    if(cell.description && imageCellRegex.test(cell.description))
+    {
+        if(toDelete)
+        {
+            const fileName = cell.description.match(/^\[image='(.+)'\]$/)[1];
+            await deleteImage(fileName);
+        }
+        return true;
+    }
+    return false;
+}
 function getNextOrder(cells)
 {
     const orders = Object.values(cells).map(cell => cell.order || 0);

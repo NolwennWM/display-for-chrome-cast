@@ -22,6 +22,7 @@ export default class CellsForm
         this.addButton?.addEventListener('click', this.displayDialog.bind(this));
         this.form?.addEventListener('submit', this.handleFormSubmit.bind(this));
         this.dialog?.querySelector('#cancelBtn')?.addEventListener('click', this.hideDialog.bind(this));
+        this.dialog?.querySelector('#uploadBtn')?.addEventListener('click', this.uploadImage.bind(this));
         this.tableBody?.addEventListener('click', this.handleEvents.bind(this));
         document.body.append(this.modal);
     }
@@ -136,8 +137,7 @@ export default class CellsForm
         this.tableBody.innerHTML = '';
         this.loadCells();
         this.dialog.close();
-        this.form.cellId.value = '';
-
+        this.resetForm();
     }
     async saveCell(cellId, cell)
     {
@@ -155,6 +155,7 @@ export default class CellsForm
     }
     async displayDialog(cellId = null)
     {
+        this.resetForm();
         this.dialog.showModal();
         if(typeof cellId === "string" && window.appAPI && window.appAPI.fetchCell)
         {
@@ -165,11 +166,6 @@ export default class CellsForm
                 this.form.description.value = cell.description;
                 this.form.cellId.value = cellId;
             }
-        }
-        else
-        {
-            // Réinitialiser le formulaire pour une nouvelle cellule
-            this.form.reset();
         }
     }
     hideDialog()
@@ -222,5 +218,21 @@ export default class CellsForm
         const siblingId = siblingCell.dataset.cellId;
         await window.appAPI.exchangeOrders(cellId, siblingId);
         console.log("Ordres des cellules échangés :", cellId, siblingId);
+    }
+    async uploadImage()
+    {
+        if(!window.appAPI || !window.appAPI.saveImage) return;
+        const imagePath = await window.appAPI.saveImage();
+        if(imagePath)
+        {
+            this.form.description.value = `[image='${imagePath}']`;
+            this.form.description.readOnly = true;
+        }
+    }
+    resetForm()
+    {
+        this.form.reset();
+        this.form.description.readOnly = false;
+        this.form.cellId.value = '';
     }
 }

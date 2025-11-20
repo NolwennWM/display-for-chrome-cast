@@ -27,16 +27,34 @@ export class CellsHandler
 
             const clone = template.content.cloneNode(true);
             
-            clone.querySelector('.cell-nom').textContent = cell.title;
+            clone.querySelector('.cell-name').textContent = cell.title;
 
             const description = clone.querySelector('.cell-description');
-            if(cell.description !== "") description.textContent = cell.description;
-            else description.remove();
+
+            this.displayDescription(description, cell.description);
             
             liste.append(clone);
         }
     }
-
+    displayDescription(descriptionElement, descriptionText)
+    {
+        if(!descriptionText)
+        {
+            descriptionElement.remove();
+            return;
+        }
+        const imageTagMatch = descriptionText.match(/^\[image='(.+)'\]$/);
+        if(imageTagMatch)
+        {
+            const imagePath = imageTagMatch[1];
+            const img = document.createElement('img');
+            img.src = `/uploads/${imagePath}`;
+            img.alt = 'Image cell';
+            descriptionElement.replaceWith(img);
+            return;
+        }
+        descriptionElement.textContent = descriptionText;
+    }
     sortCells(a, b)
     {
         return a[1].order - b[1].order;

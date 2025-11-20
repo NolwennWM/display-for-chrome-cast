@@ -3,6 +3,7 @@ const { createWindow } = require('./modules/window');
 const { registerConfigIPC } = require('./ipc/config');
 const { registerBrowserIPC } = require('./ipc/browser');
 const { registerCellsIPC } = require('./ipc/cells');
+const { registerImagesIPC } = require('./ipc/images');
 const { initializeConfigFiles, isFirstLaunch, debugPaths } = require('./modules/migration');
 
 // Démarre le serveur local
@@ -40,6 +41,7 @@ async function openApp()
     registerConfigIPC();
     registerBrowserIPC();
     registerCellsIPC();
+    registerImagesIPC();
   }
 }
 function closeApp() 

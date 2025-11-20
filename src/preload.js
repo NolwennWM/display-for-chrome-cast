@@ -11,7 +11,8 @@ contextBridge.exposeInMainWorld('appAPI',
   fetchCell: fetchCell,
   setCell: setCell,
   deleteCell: deleteCell,
-  exchangeOrders: exchangeOrders
+  exchangeOrders: exchangeOrders,
+  saveImage: saveImage
 });
 
 async function getConfig(name) 
@@ -52,4 +53,8 @@ async function deleteCell(cellId)
 async function exchangeOrders(cellId1, cellId2)
 {
     return await ipcRenderer.invoke('exchange-orders', cellId1, cellId2);
+}
+async function saveImage()
+{
+    return await ipcRenderer.invoke('save-image');
 }

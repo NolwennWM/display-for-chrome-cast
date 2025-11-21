@@ -74,6 +74,10 @@ class Cells
             if(oldCell)
             {
                 cell.order = oldCell.order;
+                if(oldCell.description !== cell.description)
+                {
+                    await this.cleanupImageFromCell(oldCell);
+                }
             }
             
             
@@ -86,10 +90,6 @@ class Cells
             if (!this.isValidCellData(cell)) 
             {
                 throw new Error("Invalid cell data");
-            }
-            if(oldCell.description !== cell.description)
-            {
-                await this.cleanupImageFromCell(oldCell);
             }
 
             cells[cellId] = cell;

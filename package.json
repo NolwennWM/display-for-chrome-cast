@@ -1,6 +1,6 @@
 {
   "name": "display_chrome_cast",
-  "version": "1.3.2",
+  "version": "1.3.3",
   "description": "An Electron application for managing and displaying customizable cells on Chrome Cast devices. Features include dynamic content management, image handling, configuration options, and web-based display interface for digital signage and presentations.",
   "main": "src/main.js",
   "scripts": {

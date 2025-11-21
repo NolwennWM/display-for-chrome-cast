@@ -87,8 +87,10 @@ class Cells
             {
                 throw new Error("Invalid cell data");
             }
-
-            await this.isImageCell(oldCell, true);
+            if(oldCell.description !== cell.description)
+            {
+                await this.cleanupImageFromCell(oldCell);
+            }
 
             cells[cellId] = cell;
             return await this.saveCells(cells);
@@ -196,21 +198,25 @@ class Cells
      * @param {boolean} [toDelete=true] - Whether to delete the image file if found
      * @returns {Promise<boolean>} True if the cell contains an image, false otherwise
      */
-    async isImageCell(cell, toDelete = true)
-    {
+    isImageCell(cell) {
         if(!cell) return false;
         const imageCellRegex = /^\[image='(.+)'\]$/;
-        console.log("Checking if cell is image cell:", cell);
-        if(cell.description && imageCellRegex.test(cell.description))
+        return cell.description && imageCellRegex.test(cell.description);
+    }
+
+    /**
+     * Méthode spécifique pour nettoyer les images
+     * @async
+     * @param {Object} cell - The cell object to clean up
+     * @returns {Promise<void>}
+     */
+    async cleanupImageFromCell(cell) 
+    {
+        if (this.isImageCell(cell)) 
         {
-            if(toDelete)
-            {
-                const fileName = cell.description.match(/^\[image='(.+)'\]$/)[1];
-                await this.images.deleteImage(fileName);
-            }
-            return true;
+            const fileName = cell.description.match(/^\[image='(.+)'\]$/)[1];
+            await this.images.deleteImage(fileName);
         }
-        return false;
     }
 
     /**

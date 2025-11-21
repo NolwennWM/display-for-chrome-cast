@@ -1,14 +1,29 @@
+/**
+ * MainApp class manages the main application routing and module loading
+ * Handles page navigation, dynamic module imports, and API integration
+ */
 class MainApp
 {
+    /** @type {HTMLElement} Main content container element */
     contentElement = document.querySelector('#content');
+    
+    /** @type {Object|null} Currently loaded page module instance */
     currentModule = null;
     
+    /**
+     * Creates a new MainApp instance and initializes the application
+     * Sets up API handlers and loads the default dashboard page
+     */
     constructor()
     {
         this.handleAppAPI();
         this.loadPage("dashboard");
     }
 
+    /**
+     * Sets up event handlers for the application API
+     * Binds browser opening functionality and page navigation events
+     */
      handleAppAPI()
     {
         if(!window.appAPI) return;
@@ -24,6 +39,11 @@ class MainApp
         }
     }
 
+    /**
+     * Handles click events on navigation elements
+     * Prevents default behavior and triggers page loading
+     * @param {Event} event - Click event from navigation elements
+     */
     handleRouteClick(event)
     {
         event.preventDefault();
@@ -32,6 +52,11 @@ class MainApp
         this.loadPage(page);
     }
 
+    /**
+     * Loads a specific page and its associated module
+     * Fetches page content, updates DOM, and dynamically imports page module
+     * @param {string} page - Page name to load (defaults to 'dashboard')
+     */
     async loadPage(page = 'dashboard') 
     {
         if(!this.contentElement) return;
@@ -50,4 +75,5 @@ class MainApp
 
 }
 
+// Initialize the main application instance globally
 window.MainApp = new MainApp();

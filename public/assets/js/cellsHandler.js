@@ -1,11 +1,25 @@
+/**
+ * CellsHandler class manages the display of cells on the public interface
+ * Fetches cell data from API and renders them with proper formatting and ordering
+ */
 export class CellsHandler
 {
+    /**
+     * Creates a new CellsHandler instance and initializes cell display
+     * Automatically starts the cell loading and rendering process
+     */
     constructor()
     {
         console.log("CellsHandler initialized");
         this.displayCells();
     }
 
+    /**
+     * Fetches cell data from the API endpoint
+     * Makes HTTP request to retrieve all cell configurations
+     * @returns {Promise<Object>} Cell data object from the API
+     * @private
+     */
     async #fetchCells() 
     {
         const response = await fetch('/api/cells');
@@ -13,6 +27,10 @@ export class CellsHandler
         return data;
     }
     
+    /**
+     * Displays all visible cells in the DOM
+     * Fetches cells, sorts them by order, and renders only displayed cells
+     */
     async displayCells() 
     {
         const cells = await this.#fetchCells();
@@ -36,6 +54,13 @@ export class CellsHandler
             liste.append(clone);
         }
     }
+    
+    /**
+     * Handles the display of cell descriptions with special formatting
+     * Processes text descriptions and converts image tags to actual images
+     * @param {HTMLElement} descriptionElement - DOM element to contain the description
+     * @param {string} descriptionText - Raw description text from cell data
+     */
     displayDescription(descriptionElement, descriptionText)
     {
         if(!descriptionText)
@@ -55,6 +80,14 @@ export class CellsHandler
         }
         descriptionElement.textContent = descriptionText;
     }
+    
+    /**
+     * Sorts cells by their order property in ascending order
+     * Used for consistent display ordering of cells
+     * @param {Array} a - First cell entry [key, cellData]
+     * @param {Array} b - Second cell entry [key, cellData]
+     * @returns {number} Comparison result for sorting
+     */
     sortCells(a, b)
     {
         return a[1].order - b[1].order;

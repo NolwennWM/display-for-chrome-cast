@@ -1,19 +1,39 @@
 import {ModalNWM} from './modal-nwm/modalnwm.js';
 
+/**
+ * CellsForm class manages the cells table and form interactions
+ * Handles CRUD operations for cells through the application API
+ */
 export default class CellsForm
 {
+    /** @type {HTMLElement} Table body element for displaying cells */
     tableBody = document.querySelector('#cellsTable tbody');
+    
+    /** @type {HTMLDialogElement} Dialog element for cell form */
     dialog = document.querySelector('#cellDialog');
+    
+    /** @type {HTMLFormElement} Form element for cell data input */
     form = document.querySelector('#cellForm');
+    
+    /** @type {HTMLButtonElement} Button to add new cells */
     addButton = document.querySelector('#addCellButton');
+    
+    /** @type {HTMLDialogElement} Modal dialog for confirmations */
     modal = document.createElement("dialog", { is: 'modal-nwm' });
 
+    /**
+     * Creates a new CellsForm instance and initializes it
+     */
     constructor()
     {
         this.init();
         
     }
 
+    /**
+     * Initializes the CellsForm by setting up event listeners and loading data
+     * Sets up table interactions, form handling, and modal dialogs
+     */
     init()
     {
         console.log("CellsForm initialized");
@@ -26,6 +46,11 @@ export default class CellsForm
         this.tableBody?.addEventListener('click', this.handleEvents.bind(this));
         document.body.append(this.modal);
     }
+    
+    /**
+     * Loads all cells from the API and populates the table
+     * Fetches cells, sorts them by order, and displays them in the UI
+     */
     async loadCells()
     {
         const cells = await window.appAPI.fetchCells();        
@@ -34,10 +59,23 @@ export default class CellsForm
         console.log("Cells triées :", sortedCells);
         this.populateForm(sortedCells);
     }
+    
+    /**
+     * Sorts cells by their order property in ascending order
+     * @param {Array} a - First cell entry [id, cellData]
+     * @param {Array} b - Second cell entry [id, cellData]
+     * @returns {number} Comparison result for sorting
+     */
     sortCells(a, b)
     {
         return a[1].order - b[1].order;
     }
+    
+    /**
+     * Populates the table with cell data
+     * Creates table rows with action buttons for each cell
+     * @param {Array} cells - Array of [id, cellData] tuples
+     */
     populateForm(cells)
     {
         for (const [id, cell] of cells) 
@@ -68,6 +106,12 @@ export default class CellsForm
             this.tableBody.append(row);
         }
     }
+    
+    /**
+     * Handles click events on table action buttons
+     * Delegates to appropriate methods based on button role
+     * @param {Event} event - Click event from table buttons
+     */
     handleEvents(event)
     {
         const button = event.target.closest('.table-btn');
@@ -92,6 +136,12 @@ export default class CellsForm
                 console.warn("Rôle de bouton inconnu :", role);
         }
     }
+    
+    /**
+     * Deletes a cell after user confirmation
+     * Shows confirmation modal and removes cell from API and UI
+     * @param {HTMLElement} button - Delete button element
+     */
     async deleteCell(button)
     {
         if(!await this.modal.confirm("Êtes-vous sûr de vouloir supprimer cette cellule ?")) return;
@@ -114,6 +164,12 @@ export default class CellsForm
             console.error("Erreur lors de la suppression de la cellule :", error);
         }
     }
+    
+    /**
+     * Opens the edit dialog for a specific cell
+     * Loads cell data into the form for editing
+     * @param {HTMLElement} button - Edit button element
+     */
     async editCell(button)
     {
         const cellId = button.getAttribute('data-id');
@@ -121,6 +177,12 @@ export default class CellsForm
         // Logique pour éditer la cellule (afficher un formulaire, etc.)
         this.displayDialog(cellId);
     }
+    
+    /**
+     * Handles form submission for creating or updating cells
+     * Validates data, saves to API, and refreshes the table
+     * @param {Event} event - Form submit event
+     */
     async handleFormSubmit(event)
     {
         event.preventDefault();
@@ -139,6 +201,14 @@ export default class CellsForm
         this.dialog.close();
         this.resetForm();
     }
+    
+    /**
+     * Saves cell data to the API
+     * Creates new cell or updates existing one based on cellId
+     * @param {string|null} cellId - Cell ID for updates, null for new cells
+     * @param {Object} cell - Cell data object
+     * @returns {Object} Result object with success status and cellId
+     */
     async saveCell(cellId, cell)
     {
         if(!window.appAPI || !window.appAPI.setCell) return;
@@ -153,6 +223,12 @@ export default class CellsForm
             return { success: false };
         }
     }
+    
+    /**
+     * Displays the cell form dialog
+     * If cellId provided, loads existing cell data for editing
+     * @param {string|null} cellId - Optional cell ID for editing
+     */
     async displayDialog(cellId = null)
     {
         this.resetForm();
@@ -168,10 +244,20 @@ export default class CellsForm
             }
         }
     }
+    
+    /**
+     * Closes the cell form dialog
+     */
     hideDialog()
     {
         this.dialog.close();
     }
+    
+    /**
+     * Toggles the display status of a cell
+     * Updates the cell's visibility and reflects changes in the UI
+     * @param {HTMLElement} button - Display toggle button element
+     */
     async toggleDisplayCell(button)
     {
         const cellId = button.getAttribute('data-id');
@@ -190,6 +276,11 @@ export default class CellsForm
         }
     }
 
+    /**
+     * Moves a cell up or down in the order
+     * Updates DOM position and exchanges order with sibling cell
+     * @param {HTMLElement} button - Move button element (up or down)
+     */
     async moveCell(button)
     {
         if(!window.appAPI || !window.appAPI.exchangeOrders) return;
@@ -219,6 +310,11 @@ export default class CellsForm
         await window.appAPI.exchangeOrders(cellId, siblingId);
         console.log("Ordres des cellules échangés :", cellId, siblingId);
     }
+    
+    /**
+     * Opens file dialog to upload an image
+     * Sets the image path in the description field as [image='path']
+     */
     async uploadImage()
     {
         if(!window.appAPI || !window.appAPI.saveImage) return;
@@ -229,6 +325,11 @@ export default class CellsForm
             this.form.description.readOnly = true;
         }
     }
+    
+    /**
+     * Resets the form to its default state
+     * Clears all fields and removes readonly restrictions
+     */
     resetForm()
     {
         this.form.reset();

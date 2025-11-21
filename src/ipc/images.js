@@ -1,11 +1,32 @@
 const { ipcMain } = require('electron');
-const { saveImage } = require('../modules/images');
+const Images = require('../modules/images');
 
-function registerImagesIPC() 
+/**
+ * IPC handler class for image-related operations
+ * Provides secure communication bridge between renderer and main process
+ * for image management functionality
+ */
+class ImagesIPC
 {
-    ipcMain.handle('save-image', async (event) => { 
-        return await saveImage();
-    });
-};
+    /**
+     * Initializes the ImagesIPC instance with an Images module
+     */
+    constructor()
+    {
+        this.images = new Images();
+    }
 
-module.exports = { registerImagesIPC };
+    /**
+     * Registers IPC handlers for image-related operations
+     * Sets up communication channels for image saving functionality
+     * Handler: 'save-image' - Opens file dialog and saves selected image
+     */
+    registerImagesIPC() 
+    {
+        ipcMain.handle('save-image', async (event) => { 
+            return await this.images.saveImage();
+        });
+    }
+}
+
+module.exports = ImagesIPC;

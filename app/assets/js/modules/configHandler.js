@@ -1,10 +1,23 @@
+/**
+ * ConfigHandler class provides base functionality for handling configuration forms
+ * Manages loading, populating, and saving configuration data through the application API
+ */
 export class ConfigHandler
 {
+    /**
+     * Creates a new ConfigHandler instance
+     * Base constructor for configuration handling classes
+     */
     constructor()
     {
 
     }
 
+    /**
+     * Loads configuration data from a specified file and populates the form
+     * Fetches configuration through the API and updates form fields
+     * @param {string} configFile - Configuration file name to load
+     */
     async loadConfig(configFile = "")
     {
         if(configFile === "" || !window.appAPI || !window.appAPI.getConfig) return;
@@ -14,6 +27,12 @@ export class ConfigHandler
         console.log("Configuration chargée :", config);
         this.populateForm(config);
     }
+    
+    /**
+     * Populates form fields with configuration data
+     * Maps configuration values to form inputs and sets up change listeners
+     * @param {Object} config - Configuration object with key-value pairs
+     */
     populateForm(config)
     {
         // Remplir le formulaire avec les données de configuration
@@ -35,6 +54,12 @@ export class ConfigHandler
             input.addEventListener('change', this.saveConfig.bind(this));
         }
     }
+    
+    /**
+     * Saves configuration changes when form inputs are modified
+     * Handles different input types and persists changes through the API
+     * @param {Event} event - Change event from form input elements
+     */
     async saveConfig(event)
     {
         if(!window.appAPI || !window.appAPI.setConfig) return;

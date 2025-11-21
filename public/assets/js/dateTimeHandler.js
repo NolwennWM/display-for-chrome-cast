@@ -1,12 +1,25 @@
 
+/**
+ * DateTimeHandler class manages date and time display functionality
+ * Provides methods for displaying dates and clocks in various formats (digital/analog)
+ */
 export class DateTimeHandler
 {
+    /**
+     * Creates a new DateTimeHandler instance
+     * Initializes the date and time handler for display operations
+     */
     constructor()
     {
         console.log("DateHandler initialized");
     }
 
-
+    /**
+     * Creates and returns a formatted date element
+     * Supports short (DD/MM/YYYY) and full (detailed French format) date formats
+     * @param {string} format - Date format ('short', 'full', or other)
+     * @returns {HTMLSpanElement} Span element containing the formatted date
+     */
     displayDate(format)
     {
         const dateElement = document.createElement('span');
@@ -33,6 +46,10 @@ export class DateTimeHandler
         return dateElement;
     }
 
+    /**
+     * Updates the digital clock display with current time
+     * Shows time in HH:MM format, updates the timeElement property
+     */
     updateDigitalClock()
     {
         const now = new Date();
@@ -40,6 +57,13 @@ export class DateTimeHandler
         const minutes = String(now.getMinutes()).padStart(2, '0');
         this.timeElement.textContent = `${hours}:${minutes}`;
     }
+    
+    /**
+     * Creates and returns a clock element in the specified format
+     * Supports both analog and digital clock formats with automatic updates
+     * @param {string} format - Clock format ('analog', 'digital', or other)
+     * @returns {HTMLDivElement} Div element containing the formatted clock
+     */
     displayClock(format)
     {
         const timeElement = document.createElement('div');
@@ -56,7 +80,7 @@ export class DateTimeHandler
         }
         else if(format === "digital")
         {
-            this.updateDigitalTime();
+            this.updateDigitalClock();
             setInterval(this.updateDigitalClock.bind(this), 60000);
         }
         else
@@ -67,6 +91,12 @@ export class DateTimeHandler
 
         return timeElement;
     }
+    
+    /**
+     * Creates the HTML structure for an analog clock
+     * Builds hour, minute, second hands and central dot elements
+     * @returns {HTMLDivElement} Div element containing the analog clock structure
+     */
     createAnalogClock()
     {
         const clock = document.createElement('div');
@@ -90,6 +120,11 @@ export class DateTimeHandler
         
         return clock;
     }
+    
+    /**
+     * Updates the analog clock hands positions based on current time
+     * Calculates and applies rotation angles for hours, minutes, and seconds hands
+     */
     updateAnalogClock()
     {
         const now = new Date();
